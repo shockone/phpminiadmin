@@ -9,15 +9,44 @@
  Dual licensed: GPL v2 and MIT, see texts at http://opensource.org/licenses/
 */
 
+// Only one day lifetime.
+if (filemtime(__FILE__) < strtotime('Yesterday')) {
+  echo 'Touch the file.';
+  return;
+}
+
  $ACCESS_PWD=''; #!!!IMPORTANT!!! this is script access password, SET IT if you want to protect you DB from public access
+
+
+// Get the DB username, password and DB name from the shopping cart config.
+$username = '';
+$password = '';
+$db_name = '';
+$hostname = '';
+
+if (file_exists('includes/configure.php')) { // osCommerce and company
+  require_once 'includes/configure.php';
+  $username = DB_SERVER_USERNAME;
+  $password = DB_SERVER_PASSWORD;
+  $db_name = DB_DATABASE;
+  $hostname = DB_SERVER;
+} elseif (file_exists('config.php')){    // X-Cart
+  define('XCART_START', 'placeholder');
+  require_once 'config.php';
+  $username = $sql_user;
+  $password = $sql_password;
+  $db_name = $sql_db;
+  $hostname = $sql_host;
+}
+
 
  #DEFAULT db connection settings
  # --- WARNING! --- if you set defaults - it's recommended to set $ACCESS_PWD to protect your db!
  $DBDEF=array(
- 'user'=>"",#required
- 'pwd'=>"", #required
- 'db'=>"",  #optional, default DB
- 'host'=>"",#optional
+ 'user'=>$username,#required
+ 'pwd'=>$password, #required
+ 'db'=>$db_name,  #optional, default DB
+ 'host'=>$hostname,#optional
  'port'=>"",#optional
  'chset'=>"utf8",#optional, default charset
  );

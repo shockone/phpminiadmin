@@ -1,4 +1,4 @@
-- Add autocompletion for popular SQL Keywoards and current DB tables (by the way, you can use ctrl+j and ctrl+k to navigate in the autocompletion pop-up).
+- Add autocompletion for popular SQL keywords, current DB tables and columns (by the way, you can use ctrl+j and ctrl+k to navigate in the autocompletion pop-up).
 
 ![Autocompletion](https://dl.dropboxusercontent.com/u/608214/scrn/1367657021.png)
 

@@ -183,8 +183,9 @@ function do_sql($q){
  }
 }
 
+$table_column_names = array();
 function display_select($sth,$q){
- global $dbh,$DB,$sqldr,$reccount,$is_sht,$xurl;
+ global $dbh,$DB,$sqldr,$reccount,$is_sht,$xurl,$table_column_names;
  $rc=array("o","e");
  $dbn=$DB['db'];
  $sqldr='';
@@ -226,6 +227,7 @@ function display_select($sth,$q){
     if ($is_sht && $i>0) break;
     $meta=mysql_fetch_field($sth,$i);
     $headers.="<th>".$meta->name."</th>";
+    $table_column_names[] = $meta->name;
  }
  if ($is_shd) $headers.="<th>show create database</th><th>show table status</th><th>show triggers</th>";
  if ($is_sht) $headers.="<th>engine</th><th>~rows</th><th>data size</th><th>index size</th><th>show create table</th><th>explain</th><th>indexes</th><th>export</th><th>drop</th><th>truncate</th><th>optimize</th><th>repair</th>";
@@ -275,7 +277,7 @@ function display_select($sth,$q){
 }
 
 function print_header(){
- global $err_msg,$VERSION,$DB,$dbh,$self,$is_sht,$xurl,$SHOW_T;
+ global $err_msg,$VERSION,$DB,$dbh,$self,$is_sht,$xurl,$SHOW_T,$table_column_names;
  $dbn=$DB['db'];
 ?>
 <!DOCTYPE html>
@@ -459,11 +461,13 @@ function cfg_toggle(){
   while($row=mysql_fetch_row($sth)){
     $tables[] = $row[0];
   }
-  echo 'collection = '.json_encode($tables).";\n";
+  if (!is_array($table_column_names)) $table_column_names = array();
+  echo 'collection = '.json_encode(array_merge($tables, $table_column_names)).";\n";
   unset($tables);
+  unset($table_column_names);
 ?>
 
-collection = collection.concat(['SELECT', 'UPDATE', 'INSERT', 'FROM', 'WHERE', 'GROUP BY', 'ORDER BY', 'INNER JOIN']);
+collection = collection.concat(['SELECT', 'UPDATE', 'INSERT', 'FROM', 'WHERE', 'GROUP BY', 'ORDER BY', 'INNER JOIN', 'DESC', 'ASC', 'COUNT(*)']);
 
 /*
 WICK: Web Input Completion Kit

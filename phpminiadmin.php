@@ -1145,7 +1145,7 @@ function print_screen(){
 
 <div class="dot" style="padding:0 0 5px 20px">
 SQL-query (or multiple queries separated by ";"):&nbsp;<button type="button" class="qnav" onclick="q_prev()">&lt;</button><button type="button" class="qnav" onclick="q_next()">&gt;</button><br>
-<textarea id="q" name="q" cols="70" rows="10" style="width:98%" class="wickEnabled"><?php echo $SQLq?></textarea><br>
+<textarea id="q" name="q" cols="70" rows="10" style="width:98%" class="wickEnabled" autofocus><?php echo $SQLq?></textarea><br>
 <input type="submit" name="GoSQL" value="Go" onclick="return chksql()" style="width:100px">&nbsp;&nbsp;
 <input type="button" name="Clear" value=" Clear " onclick="document.DF.q.value=''" style="width:100px">
 </div>
